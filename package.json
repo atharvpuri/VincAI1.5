@@ -1,0 +1,22 @@
+{
+  "name": "vincai-vercel",
+  "version": "1.0.0",
+  "description": "VincAI with TRUE 16+ Million Parameter Neural Network",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "node backend/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "compression": "^1.7.4",
+    "natural": "^6.5.0",
+    "compromise": "^14.10.0",
+    "mathjs": "^11.11.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
