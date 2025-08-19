@@ -1,0 +1,12 @@
+{
+  "version": "2.1.0",
+  "build": "2025-08-16-latest",
+  "commit": "Force Vercel to use latest",
+  "features": [
+    "Advanced Web Scraping",
+    "Serverless Functions",
+    "Responsive Design",
+    "Real-time AI Chat"
+  ],
+  "status": "ready"
+}

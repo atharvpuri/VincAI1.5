@@ -1,0 +1,19 @@
+{
+  "name": "vincai-frontend",
+  "version": "1.0.0",
+  "description": "VincAI Frontend - Modern AI Chat Interface",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Static files ready'",
+    "dev": "echo 'Development server not needed - open index.html'"
+  },
+  "keywords": [
+    "ai",
+    "frontend",
+    "chat",
+    "ui",
+    "responsive"
+  ],
+  "author": "VincAI Team",
+  "license": "MIT"
+}

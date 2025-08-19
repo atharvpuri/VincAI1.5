@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VincAI API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 8px;
+        }
+        input {
+            width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            min-height: 100px;
+        }
+        .sources {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(100, 255, 100, 0.1);
+            border-radius: 8px;
+        }
+        .source-link {
+            display: inline-block;
+            margin: 5px;
+            padding: 5px 10px;
+            background: rgba(0, 150, 255, 0.2);
+            color: #4a9eff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 VincAI Web Scraping Test</h1>
+        <p>Test the web scraping and AI response functionality:</p>
+        
+        <div>
+            <input type="text" id="question" placeholder="Ask any question..." value="What is artificial intelligence?">
+            <button onclick="testAPI()">🔍 Search & Analyze</button>
+        </div>
+        
+        <div id="result">
+            <p style="color: #888;">Results will appear here...</p>
+        </div>
+    </div>
+
+    <script>
+        async function testAPI() {
+            const question = document.getElementById('question').value;
+            const resultDiv = document.getElementById('result');
+            
+            if (!question.trim()) {
+                resultDiv.innerHTML = '<p style="color: red;">Please enter a question!</p>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<p style="color: #4a9eff;">🔄 Searching the internet and analyzing content...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: question
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                let sourcesHTML = '';
+                if (data.sources && data.sources.length > 0) {
+                    sourcesHTML = `
+                        <div class="sources">
+                            <strong>📚 Sources:</strong><br>
+                            ${data.sources.map((source, index) => `
+                                <a href="${source.url}" target="_blank" class="source-link">
+                                    ${index + 1}. ${source.title}
+                                </a>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+                
+                resultDiv.innerHTML = `
+                    <h3>✨ VincAI Response:</h3>
+                    <p>${data.message}</p>
+                    ${sourcesHTML}
+                `;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `
+                    <p style="color: red;">❌ Error: ${error.message}</p>
+                    <p style="color: #888;">Make sure the backend server is running on localhost:3000</p>
+                `;
+            }
+        }
+        
+        // Allow Enter key to trigger search
+        document.getElementById('question').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                testAPI();
+            }
+        });
+    </script>
+</body>
+</html>
