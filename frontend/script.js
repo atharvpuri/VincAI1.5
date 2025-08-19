@@ -6,7 +6,7 @@ class VincAI {
         this.currentChatId = null;
         
         // TRUE AI Backend Configuration
-        this.backendUrl = 'http://localhost:3001';
+        this.backendUrl = window.location.origin; // Auto-detects current domain
         this.backendConnected = false;
         this.aiSystemReady = false;
         
