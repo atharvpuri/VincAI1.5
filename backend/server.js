@@ -114,6 +114,30 @@ app.get('/health', (req, res) => {
 });
 
 /**
+ * Health check endpoint for API routing
+ */
+app.get('/api/health', (req, res) => {
+    const status = vincAI ? 'ready' : 'initializing';
+    const memory = process.memoryUsage();
+    
+    res.json({
+        status: status,
+        timestamp: new Date().toISOString(),
+        memory: {
+            heapUsed: `${(memory.heapUsed / 1024 / 1024).toFixed(1)}MB`,
+            heapTotal: `${(memory.heapTotal / 1024 / 1024).toFixed(1)}MB`,
+            rss: `${(memory.rss / 1024 / 1024).toFixed(1)}MB`
+        },
+        system: vincAI ? {
+            parameters: vincAI.neuralNetwork.getParameterCount(),
+            vocabulary: vincAI.vocabulary.getSize(),
+            reasoningCapable: vincAI.reasoningEngine.isReady(),
+            trainingActive: vincAI.trainingSystem.isTraining()
+        } : null
+    });
+});
+
+/**
  * AI System Information endpoint
  */
 app.get('/ai/info', (req, res) => {

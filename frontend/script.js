@@ -62,7 +62,7 @@ class VincAI {
      * Make API request to TRUE AI Backend
      */
     async makeBackendRequest(endpoint, data = null) {
-        const url = endpoint === '' ? `${this.backendUrl}/health` : `${this.backendUrl}/api${endpoint}`;
+        const url = endpoint === '' ? `${this.backendUrl}/api/health` : `${this.backendUrl}/api${endpoint}`;
         const options = {
             method: data ? 'POST' : 'GET',
             headers: {
